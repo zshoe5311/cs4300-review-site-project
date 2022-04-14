@@ -8,7 +8,7 @@ echo '<div class="hubBar hItem">
       </div>
 
       <ul class="hB hubButtons">
-        <li class="hB"> <a href="newHome.php"> Home</a></li>
+        <li class="hB"> <a href="home.php"> Home</a></li>
         <li class="hB"> <a href="Editorchoice.html"> Editor\'s Choice</a></li>
         <li class="hB"> <a href="#"> Top 10 of the Week</a></li>
         <li class="hB"> <a href="logout.php"> Log Out</a></li>
