@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<link rel="stylesheet" href="newStyle.css">
-	<title>newHome</title>
+	<title>Home - MM</title>
 </head>
 <body>
 	<?php include 'hdr.php'; ?>
