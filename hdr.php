@@ -1,7 +1,7 @@
 <?php
-echo '<div class="hubBar">
-	<div class="hB logo"> 
-	<img src="logo4.png" alt = "logo">
+echo '<div class="hubBar hItem">
+	<div class="logo"> 
+		<img src="logo4.png" alt = "logo">
 	</div>
 	<div class="hB search">
         <input type="text" placeholder="Search...">
