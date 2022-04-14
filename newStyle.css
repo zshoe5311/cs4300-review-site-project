@@ -1,0 +1,39 @@
+body {
+	background-image: url("recordplayer.jpeg");
+	height: 100vh;
+	background-size: cover;
+	background-position: center;
+	text-align: center;
+	position: relative;
+}
+.hB {
+	display: inline-block;
+	/*margin: auto;*/
+}
+.hubBar{
+	background-color: #ff0000;
+	color: #fff;
+	width: 100%;
+	float: left;
+	display: flex;
+}
+.logo img{
+	width: 150px;
+	height: auto;
+}
+.search{
+	margin: auto;
+}
+
+.hubButtons li a {
+  background-color: #fff; 
+  text-decoration: none;
+  color: #000;
+  padding: 5px 20px;
+  border: 1px solid #fff;
+  transition: 0.6s ease;
+  margin-right: 10px;
+}
+.homeLetter {
+	background-color: rgba(128,0,255,.8);
+}

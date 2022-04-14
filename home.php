@@ -8,12 +8,11 @@
   <title>Document</title>
 </head>
 <body>
-
+<?php include 'hdr.php'; ?>
 <header>
-    <div class="main">
+	<div class="main">
       <div class="logo">
         <img src="logo4.png" alt = "logo">
-
       </div>
 
       <div class="search">
@@ -36,7 +35,6 @@
 
     <div class="title">
 		<h1>Music Madness</h1>
-		<?php include 'hdr.php'; ?>
     </div>
 
     <div class="button">
