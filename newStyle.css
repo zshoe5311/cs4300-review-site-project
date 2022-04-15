@@ -9,9 +9,6 @@ body {
 	display: inline-block;
 	margin: 55px;
 }
-.hB a{
-	background-color: rgba(128,0,255,1);
-}
 .hubBar{
 	background-color: rgba(255,0,0,1);
 	color: #fff;
@@ -117,4 +114,15 @@ body {
 .postText {
 	margin: 30px;
 	font-size: 17px;
+}
+.createRText textarea{
+	resize: none;
+	margin-left:200px;
+}
+.scoreInput {
+	background-color: rgba(128,0,255,.8);
+	color: #fff;
+	width: 500px;
+	height: auto;
+	padding: 10px;
 }
