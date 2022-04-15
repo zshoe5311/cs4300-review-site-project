@@ -22,7 +22,7 @@ $albums = array("good kid, m.A.A.d city", "Rubber Soul", "Discovery", "Certified
 		foreach ($albums as $value) {
 			$imgStr = $value.".jpg";
 			echo '
-			<div class="albumQuery" onclick="openPage(\'albumProto.php\')">
+			<div class="albumQuery hItem" onclick="openPage(\'albumProto.php\')">
 				<img src="' . $imgStr . '">
 				<h1>'.$value.' is an album in this list.</h1>
 				<p>testingtestingtesting<br>testingtesting<br>testing</p>

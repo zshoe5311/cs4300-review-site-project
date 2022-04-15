@@ -7,15 +7,16 @@ body {
 }
 .hB {
 	display: inline-block;
-	margin-top: 32px;
+	margin: 55px;
 }
 .hB a{
 	background-color: rgba(128,0,255,1);
 }
 .hubBar{
-	background-color: #ff0000;
+	background-color: rgba(255,0,0,1);
 	color: #fff;
 	width: 100%;
+	height: 150px;
 	float: left;
 	/*display: flex;*/
 }
@@ -28,9 +29,35 @@ body {
 	margin: auto;
 }
 .hItem{
-	
+	display: inline-block;
+	margin-bottom: 42px;
 }
-.hubButtons li a {
+.albumArt{
+	width: 300px;
+	height: auto;
+	float: left;
+	margin-right: 50px;
+	margin-bottom: 30px;
+}
+.albumDescript {
+	width: 85%;
+	min-height: 480px;
+	height: auto;
+	background-color: rgba(128,0,255,.8);
+	color: #fff;
+	/*margin-bottom: 50px;*/
+}
+.aDText {
+	margin-left: 50px;
+	margin-right: 50px;
+	margin-top: 30px;
+	margin-bottom: 30px;
+	text-align: left;
+}
+.aDText p {
+	font-size: 25px;
+}
+.hubButtons {
   background-color: rgba(128,0,255,1); 
   text-decoration: none;
   color: #fff;
@@ -40,11 +67,21 @@ body {
   margin-right: 10px;
 }
 
+.hubButtons:hover {
+  background-color: rgba(255,255,255,1); 
+  text-decoration: none;
+  color: #000;
+  padding: 5px 20px;
+  border: 1px solid #fff;
+  transition: .2s ease;
+  margin-right: 10px;
+}
+
 .homeLetter {
 	background-color: rgba(128,0,255,.8);
+	color: #fff;
 	width: 500px;
 	height: auto;
-	margin: auto;
 }
 .albumQuery img {
 	width: 150px;
@@ -53,10 +90,31 @@ body {
 }
 .albumQuery {
 	background-color: rgba(128,0,255,.8);
+	color: #fff;
 	width: 80%;
 	height: 200px;
-	margin: auto;
+	/*margin: auto;*/
 }
 .albumQuery:hover {
 	background-color: rgba(188,0,128,.8);
+}
+.reviewPost {
+	background-color: rgba(188,0,128,.8);
+	color: #fff;
+	width: 85%;
+	text-align: left;
+}
+#postUser {
+	font-size: 32px;
+}
+#postUser a{
+	color: rgba(0,255,0,1);	
+}
+#postUser a:hover{
+	color: rgba(255,255,255,1);	
+	transition: .2s ease;
+}
+.postText {
+	margin: 30px;
+	font-size: 17px;
 }

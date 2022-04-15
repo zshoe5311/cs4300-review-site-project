@@ -7,12 +7,12 @@ echo '<div class="hubBar hItem">
 		<input type="text" placeholder="Search...">
 	</div>
 
-	<ul class="hB hubButtons">
-		<li class="hB"> <a href="home.php"> Home</a></li>
-        <li class="hB"> <a href="eChoice.php"> Editor\'s Choice</a></li>
-        <li class="hB"> <a href="#"> Top 10 of the Week</a></li>
-        <li class="hB"> <a href="logout.php"> Log Out</a></li>
-        <li class="hB"> <a href="#"> About Us</a></li>
-	</ul>
+	
+	<a class="hubButtons hB" href="home.php"> Home</a>
+	<a class="hubButtons hB" href="eChoice.php"> Editor\'s Choice</a>
+	<a class="hubButtons hB" href="eChoice.php"> Top 10 of the Week</a>
+	<a class="hubButtons hB" href="logout.php"> Log Out</a>
+	<a class="hubButtons hB" href="#"> About Us</a>
+
 </div>';
 ?>
