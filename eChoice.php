@@ -1,6 +1,11 @@
 <?php
 $albums = array("good kid, m.A.A.d city", "Rubber Soul", "Discovery", "Certified Lover Boy", "The College Dropout");
 ?>
+<script type="text/JavaScript">
+	function openPage(pageUrl){
+		window.location.href=pageUrl;
+	}
+</script>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,7 +22,7 @@ $albums = array("good kid, m.A.A.d city", "Rubber Soul", "Discovery", "Certified
 		foreach ($albums as $value) {
 			$imgStr = $value.".jpg";
 			echo '
-			<div class="albumQuery">
+			<div class="albumQuery" onclick="openPage(\'albumProto.php\')">
 				<img src="' . $imgStr . '">
 				<h1>'.$value.' is an album in this list.</h1>
 				<p>testingtestingtesting<br>testingtesting<br>testing</p>
