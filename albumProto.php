@@ -16,7 +16,7 @@
 	$sql = 'SELECT albumName, albumArtist, albumDescription, albumArt, avgScore FROM albums WHERE albumID = ?';
 	
 	if ($stmt = $mysql_db->prepare($sql)) {
-			$aID = 1;
+			$aID = $_SESSION['albNum'];
 			$stmt->bind_param('i', $aID);
 			if ($stmt->execute()) {
 				$stmt->store_result();

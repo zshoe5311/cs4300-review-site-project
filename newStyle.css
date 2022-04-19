@@ -4,6 +4,8 @@ body {
 	background-size: cover;
 	background-position: center;
 	text-align: center;
+	background-attachment: fixed;
+	color: #fff;
 }
 .hB {
 	display: inline-block;
