@@ -1,3 +1,33 @@
+<?php
+	session_start();
+	
+	$servername = "localhost";
+	$username = "root";
+	$password = "";
+	$dbname = "reviewsitedata";
+	
+	$mysql_db = new mysqli($servername, $username, $password, $dbname);
+	// Check connection
+	if ($mysql_db->connect_error) {
+	  die("Connection failed: " . $mysql_db->connect_error);
+	}
+	
+	$albumName = $albumArtist = $albumDescription = $albumArt = '';
+	$sql = 'SELECT albumName, albumArtist, albumDescription, albumArt, avgScore FROM albums WHERE albumID = ?';
+	
+	if ($stmt = $mysql_db->prepare($sql)) {
+			$aID = 1;
+			$stmt->bind_param('i', $aID);
+			if ($stmt->execute()) {
+				$stmt->store_result();
+				if ($stmt->num_rows == 1) {
+					$stmt->bind_result($albumName, $albumArtist, $albumDescription, $albumArt, $avgScore);
+					$stmt->fetch();
+				}
+			}
+	}
+	$mysql_db->close();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,44 +38,11 @@
 <body>
     <?php include 'hdr.php'; ?>
 	<div class="albumDescript hItem">
-		<img class="albumArt" src="good kid, m.A.A.d city.jpg">
+		<img class="albumArt" src="<?php echo $albumArt; ?>">
 		<div class="aDText">
-			<h1>BITCH!!!</h1>
-			<h2>Artist: Joe Mama</h2>
-			<p> Welcome to the description, here we talk about eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,</p>
+			<h1><?php echo $albumName; ?></h1>
+			<h2>Artist: <?php echo $albumArtist; ?>&emsp;&emsp;<font size="+3">MM Score: <?php echo $avgScore; ?></font></h2>
+			<p><?php echo $albumDescription; ?></p>
 		</div>
 	</div>
 	<div class="homeLetter hItem" style="margin-top: 50px; margin-right: 70px;">

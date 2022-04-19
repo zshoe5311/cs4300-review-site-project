@@ -18,6 +18,11 @@ $albums = array("good kid, m.A.A.d city", "Rubber Soul", "Discovery", "Certified
 	<div class="homeLetter hItem">
 		<h1>List Elements:</h1>
 	</div>
+	<div class="albumQuery hItem" onclick="openPage('albumProto.php')">
+		<img src="">
+		<h1> is an album in this list.</h1>
+		<p>testingtestingtesting<br>testingtesting<br>testing</p>
+	</div>
 	<?php
 		foreach ($albums as $value) {
 			$imgStr = $value.".jpg";

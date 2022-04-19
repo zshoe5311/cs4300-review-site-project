@@ -35,7 +35,7 @@
     // Validate credentials
     if (empty($username_err) && empty($password_err)) {
       // Prepare a select statement
-      $sql = 'SELECT id, username, password FROM users WHERE username = ?';
+      $sql = 'SELECT id, username, password, isAdmin, isBanned FROM users WHERE username = ?';
 
       if ($stmt = $con->prepare($sql)) {
 
@@ -54,11 +54,10 @@
           // Check if username exists. Verify user exists then verify
           if ($stmt->num_rows == 1) {
             // Bind result into variables
-            $stmt->bind_result($id, $username, $hashed_password);
+            $stmt->bind_result($id, $username, $hashed_password, $isAdmin, $isBanned);
 
             if ($stmt->fetch()) {
-              if (password_verify($password, $hashed_password)) {
-
+              if (password_verify($password, $hashed_password) && $isBanned == 0) {
                 // Start a new session
                 session_start();
 
@@ -66,12 +65,17 @@
                 $_SESSION['loggedin'] = true;
                 $_SESSION['id'] = $id;
                 $_SESSION['username'] = $username;
-
+				$_SESSION['isAdmin'] = $isAdmin;
                 // Redirect to user to page
                 header('location: home.php');
               } else {
-                // Display an error for passord mismatch
-                $password_err = 'Invalid password';
+				if ($isBanned == 1) {
+					$password_err = 'This account is banned. You are no longer able to post reviews.';
+				}
+				else {
+					// Display an error for passord mismatch
+					$password_err = 'Invalid password';
+				}
               }
             }
           } else {
@@ -85,6 +89,7 @@
       }
 
       // Close connection
+	  $con->close();//sus
       $mysql_db->close();
     }
   }
@@ -108,7 +113,7 @@
   <main>
     <section class="container wrapper">
       <h2 class="display-4 pt-3">Login</h2>
-          <p class="text-center">Please fill this form to create an account.</p>
+          <p class="text-center">Please fill in your credentials.</p>
           <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST">
             <div class="form-group <?php (!empty($username_err))?'has_error':'';?>">
               <label for="username">Username</label>
@@ -125,7 +130,7 @@
             <div class="form-group">
               <input type="submit" class="btn btn-block btn-outline-primary" value="login">
             </div>
-            <p>Don't have an account? <a href="register.php">Sign in</a>.</p>
+            <p>Don't have an account? <a href="register.php">Create one</a>.</p>
           </form>
     </section>
   </main>

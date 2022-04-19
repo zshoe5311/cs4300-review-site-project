@@ -126,3 +126,10 @@ body {
 	height: auto;
 	padding: 10px;
 }
+.genSection {
+	background-color: rgba(128,0,255,.8);
+	color: #fff;
+	width: 95%;
+	height: auto;
+	padding: 10px;
+}
