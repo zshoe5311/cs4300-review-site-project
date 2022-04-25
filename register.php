@@ -77,16 +77,33 @@
 	    if (empty($username_err) && empty($password_err) && empty($confirm_err)) {
 
 	    	// Prepare insert statement
-			$sql = 'INSERT INTO users (username, password) VALUES (?,?)';
-
+			$sql = 'INSERT INTO users (id, username, password) VALUES (?,?,?)';
+			$loopQuery = "SELECT COUNT(id) FROM users WHERE id = ?";
+			$uID = 0;
+			$sum = 1;
+				
+			while ($sum != 0) { //function to find correct id for new entry in users table; similar to function in addAlbum.php
+				$uID = $uID + 1;
+				if ($stmt = $con->prepare($loopQuery)) {
+					$stmt->bind_param('i', $uID);
+					if ($stmt->execute()) {
+						$stmt->store_result();
+						if ($stmt->num_rows == 1) {
+							$stmt->bind_result($sum);
+							$stmt->fetch();
+						}
+					}
+				}
+			}
+		
 			if ($stmt = $con->prepare($sql)) {
 
-				// Set parmater
+				// Set parameter
 				$param_username = $username;
 				$param_password = password_hash($password, PASSWORD_DEFAULT); // Created a password
 
 				// Bind param variable to prepares statement
-				$stmt->bind_param('ss', $param_username, $param_password);
+				$stmt->bind_param('iss', $uID, $param_username, $param_password);
 
 				// Attempt to execute
 				if ($stmt->execute()) {
