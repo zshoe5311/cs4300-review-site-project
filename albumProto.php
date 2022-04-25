@@ -38,7 +38,7 @@
 <body>
     <?php include 'hdr.php'; ?>
 	<div class="albumDescript hItem">
-		<img class="albumArt" src="<?php echo $albumArt; ?>">
+		<img class="albumArt" src="albArt/<?php echo $albumArt; ?>">
 		<div class="aDText">
 			<h1><?php echo $albumName; ?></h1>
 			<h2>Artist: <?php echo $albumArtist; ?>&emsp;&emsp;<font size="+3">MM Score: <?php echo $avgScore; ?></font></h2>

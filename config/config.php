@@ -87,8 +87,8 @@
 	$bsql = "SELECT COUNT(*) AS cnt FROM albums";
 	$stmt = $con->query($bsql);
 	$result = $stmt->fetch_assoc();
-	if ($result['cnt'] < 1) {
-		$myfile = fopen("aData.txt", "r") or die("Unable to open aData!");
+	$myfile = fopen("aData.txt", "r") or die("Unable to open aData!");
+	if ($result['cnt'] < 1 && !empty(file_get_contents("aData.txt"))) {
 		$aDesc = $aName = $aArtist = $alArt = '';
 		$aScore = $aID = 0;
 		while(!feof($myfile)) {
@@ -107,7 +107,7 @@
 				}		
 			}
 		}
-		fclose($myfile);
 	}
+	fclose($myfile);
 	
 	?>

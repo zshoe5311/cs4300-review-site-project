@@ -36,7 +36,7 @@
 						$stmt->bind_result($albumName, $albumArtist, $albumArt, $avgScore);
 						$stmt->fetch();
 						echo '<button class="albumQuery hItem" type="submit" name="albButton" value="'.$aID.'">
-							<img src="'.$albumArt.'">
+							<img src="albArt/'.$albumArt.'">
 							<h1>'.$albumName.'</h1>
 							<p>Artist: '.$albumArtist.'<br>MM Score: '.$avgScore.'</p>
 						</button>';

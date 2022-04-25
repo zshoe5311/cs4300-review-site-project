@@ -29,25 +29,24 @@
 					$stmt->bind_param('i', $input);
 					$stmt->execute();
 					$stmt->store_result();
-					echo $stmt->num_rows;
-					if ($stmt->num_rows > 0) {
-						/*echo "its lit";
+					if ($stmt->affected_rows > 0) {
 						$myfile = fopen("aData.txt", "r") or die("Unable to open aData!");
-						$delContent = trim(fgets($myfile));
-						while ($delContent != $input) {
+						$delContent = fgets($myfile);
+						while (trim($delContent) != $input) {
 							for ($i = 0; $i < 6; $i++) {
-								$delContent = trim(fgets($myfile));
+								$delContent = fgets($myfile);
 							}
 						}
-						for ($i = 0; $i < 6; $i++) {
-							$delContent += ("\n" + trim(fgets($myfile)));
+						for ($i = 0; $i < 5; $i++) {
+							$delContent = $delContent./*"\n".*/fgets($myfile);
 						}
-						$delContent += "\n";
+						//$delContent = $delContent."\n";
 						
-						$contents = file_get_contents($myfile);
+						$contents = file_get_contents("aData.txt");
 						$contents = str_replace($delContent, '', $contents);
-						file_put_contents($myfile, $contents);*/
+						file_put_contents("aData.txt", $contents);
 						$input_err = "Album Deleted Successfully!";
+						fclose($myfile);
 					} else {
 						$input_err = "Please enter a positive integer ID number from above.";
 					}

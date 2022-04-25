@@ -68,6 +68,14 @@
 					$stmt->bind_param("ssssi", $albName, $albArtist, $albDescript, $albArt, $albID);
 					if ($stmt->execute()) {
 							$_SESSION['albNum'] = $albID;
+							$myfile = fopen("aData.txt", "a") or die("Unable to open aData!");
+							fwrite($myfile, $albID."\n");
+							fwrite($myfile, $albArtist."\n");
+							fwrite($myfile, $albDescript."\n");
+							fwrite($myfile, $albArt."\n");
+							fwrite($myfile, "0\n");
+							fwrite($myfile, $albName."\n");
+							fclose($myfile);
 							header('location: albumProto.php');
 					}
 				}
