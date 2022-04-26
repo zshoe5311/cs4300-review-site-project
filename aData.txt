@@ -1,36 +1,42 @@
 1
 Gorillaz
-this is the description here. no need to linger
+albDescriptions/DemonDays.txt
 demonDays.png
-4
+0
 Demon Days
 2
-Kendrick Lamar
-album good, by oklama, plus theres a van on the cover, cool
-gkmc.jpg
-0
-good kid, m.A.A.d city
-3
-Drake
-which is better? This or Donda?
-clb.jpg
-0
-Certified Lover Boy
-4
 Kanye West
-Ye
+albDescriptions/TheCollegeDropout.txt
 tcd.jpg
 0
 The College Dropout
-5
+3
 Daft Punk
-daft dunk
+albDescriptions/Discovery.txt
 Discovery.jpg
 0
 Discovery
+4
+Drake
+albDescriptions/CertifiedLoverBoy.txt
+clb.jpg
+0
+Certified Lover Boy
+5
+Kendrick Lamar
+albDescriptions/goodkid,m.A.A.dcity.txt
+gkmc.jpg
+0
+good kid, m.A.A.d city
 6
 The Beatles
-british people
+albDescriptions/RubberSoul.txt
 rSoul.jpg
 0
 Rubber Soul
+7
+Nirvana
+albDescriptions/InUtero.txt
+inUtero.jpg
+0
+In Utero

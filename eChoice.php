@@ -69,7 +69,7 @@
 	</div>
 	<form method="post" action="<?php echo $_SERVER['PHP_SELF'];?>">
 		<?php
-			while ($nextQuery && $num <= 5) {
+			while ($nextQuery && $num <= 8) {
 				createAlbumQuery($mysql_db, $num);
 				$num = $num + 1;
 			}

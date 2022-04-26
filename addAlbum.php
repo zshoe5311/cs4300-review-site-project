@@ -18,22 +18,22 @@
 		$input_err = "";
 		if ($_SERVER['REQUEST_METHOD'] === 'POST') { 
 			if(empty(trim($_POST['fAlbName']))){ //can be done more efficient, look at posted vars empty bookmark
-				$input_err = 'Please enter data.';
+				$input_err = 'Please enter missing data.';
 			} else{
 				$albName = trim($_POST['fAlbName']);
 			}
 			if(empty(trim($_POST['fAlbArtist']))){
-				$input_err = 'Please enter data.';
+				$input_err = 'Please enter missing data.';
 			} else{
 				$albArtist = trim($_POST['fAlbArtist']);
 			}
 			if(empty(trim($_POST['fAlbDescript']))){
-				$input_err = 'Please enter data.';
+				$input_err = 'Please enter missing data.';
 			} else{
 				$albDescript = trim($_POST['fAlbDescript']);
 			}
 			if(empty(trim($_POST['fAlbArt']))){
-				$input_err = 'Please enter data.';
+				$input_err = 'Please enter missing data.';
 			} else{
 				$albArt = trim($_POST['fAlbArt']);
 			}
@@ -45,6 +45,12 @@
 			*/
 			
 			if (empty($input_err)) {
+				$fileName = "albDescriptions/".str_replace(' ','',$albName).".txt";
+				$myfile = fopen($fileName, "w");
+				fwrite($myfile, $albDescript);
+				fclose($myfile);
+				$albDescript = $fileName;
+				
 				$addQuery = "INSERT INTO `albums`(`albumName`, `albumArtist`, `albumDescription`, `albumArt`, `avgScore`, `albumID`) VALUES (?,?,?,?,0,?)";
 				$loopQuery = "SELECT COUNT(albumID) FROM albums WHERE albumID = ?";
 				$albID = 0;

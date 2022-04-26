@@ -45,7 +45,7 @@
 	$bsql = "SELECT COUNT(*) AS cnt FROM users";
 	$stmt = $con->query($bsql);
 	$result = $stmt->fetch_assoc();
-	if ($result['cnt'] < 1) {
+	if ($result['cnt'] < 1 && !empty(file_get_contents("uData.txt"))) {
 		$myfile = fopen("uData.txt", "r") or die("Unable to open uData!");
 		$uID = $uName = $uPW = $uCreatedAt = '';
 		$uAdmin = $uBanned = 0;
@@ -109,5 +109,47 @@
 		}
 	}
 	fclose($myfile);
+	
+	//loading review data to database
+	$rsql = "CREATE TABLE IF NOT EXISTS `reviews` (
+	  `reviewID` int(11) NOT NULL,
+	  `albumID` int(11) NOT NULL,
+	  `reviewDescript` text NOT NULL,
+	  `reviewScore` int(11) NOT NULL,
+	  `authorUsername` varchar(255) NOT NULL,
+	  `postingDate` datetime NOT NULL
+	)";
+	
+	if ($con->query($rsql) === TRUE) {
+	  echo "!";
+	} else {
+	  echo "Error creating reviews table: " . $con->error;
+	}
+	
+	/*$bsql = "SELECT COUNT(*) AS cnt FROM albums";
+	$stmt = $con->query($bsql);
+	$result = $stmt->fetch_assoc();
+	$myfile = fopen("aData.txt", "r") or die("Unable to open aData!");
+	if ($result['cnt'] < 1 && !empty(file_get_contents("aData.txt"))) {
+		$aDesc = $aName = $aArtist = $alArt = '';
+		$aScore = $aID = 0;
+		while(!feof($myfile)) {
+			$aID = trim(fgets($myfile));
+			$aArtist = trim(fgets($myfile));
+			$aDesc = trim(fgets($myfile));
+			$alArt = trim(fgets($myfile));
+			$aScore = trim(fgets($myfile));
+			$aName = trim(fgets($myfile));
+			$isql = "INSERT INTO `albums`(`albumName`, `albumArtist`, `albumDescription`, `albumArt`, `avgScore`, `albumID`) 
+			VALUES (?,?,?,?,?,?)";
+			if ($stmt = $con->prepare($isql)) {
+				$stmt->bind_param('ssssii', $aName, $aArtist, $aDesc, $alArt, $aScore, $aID);
+				if ($stmt->execute()) {
+					echo "!";
+				}		
+			}
+		}
+	}
+	fclose($myfile);*/
 	
 	?>

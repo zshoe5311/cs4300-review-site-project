@@ -42,7 +42,11 @@
 		<div class="aDText">
 			<h1><?php echo $albumName; ?></h1>
 			<h2>Artist: <?php echo $albumArtist; ?>&emsp;&emsp;<font size="+3">MM Score: <?php echo $avgScore; ?></font></h2>
-			<p><?php echo $albumDescription; ?></p>
+			<p><?php 
+				$dFile = fopen($albumDescription, "r") or die("Unable to load description!");
+				echo fread($dFile, filesize($albumDescription));
+				fclose($dFile);
+				?></p>
 		</div>
 	</div>
 	<div class="homeLetter hItem" style="margin-top: 50px; margin-right: 70px;">
