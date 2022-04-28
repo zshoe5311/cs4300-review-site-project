@@ -37,12 +37,41 @@
 	$rQuery = "SELECT `reviewID`, `reviewDescript`, `reviewScore`, `authorUsername`, `postingDate` FROM `reviews` WHERE albumID = ".$aID;
 	$rStmt = $mysql_db->prepare($rQuery);
 	$rStmt->execute();
+	$rStmt->store_result();
 	$rStmt->bind_result($rID, $rDesc, $rScore, $rAuthor, $rPostDate);
 	
 	if (isset($_REQUEST['cRB'])) {
 		$_SESSION['rD'] = "Enter review here...";
 		$mysql_db->close();
 		header('location: createReview.php');
+	}
+	
+	if (isset($_REQUEST['revROD'])) {
+		$dRID = $_REQUEST['revROD'];
+		$dQuery = "DELETE FROM `reviews` WHERE reviewID = ".$dRID;
+		$dSTMT = $mysql_db->prepare($dQuery);
+		$dSTMT->execute();
+		$dSTMT->store_result();
+		if ($dSTMT->affected_rows > 0) {
+			$myfile = fopen("rData.txt", "r") or die("Unable to open rData!");
+			$delContent = fgets($myfile);
+			while (trim($delContent) != $dRID) {
+				for ($i = 0; $i < 6; $i++) {
+					$delContent = fgets($myfile);
+				}
+			}
+			for ($i = 0; $i < 5; $i++) {
+				$delContent = $delContent.fgets($myfile);
+			}
+			
+			$contents = file_get_contents("rData.txt");
+			$contents = str_replace($delContent, '', $contents);
+			file_put_contents("rData.txt", $contents);
+			fclose($myfile);
+			unlink('reviews/'.$dRID.'.txt');
+		}
+		$mysql_db->close();
+		header('location: albumProto.php');
 	}
 	//$mysql_db->close();
 ?>
@@ -59,7 +88,7 @@
 		<img class="albumArt" src="albArt/<?php echo $albumArt; ?>">
 		<div class="aDText">
 			<h1><?php echo $albumName; ?></h1>
-			<h2>Artist: <?php echo $albumArtist; ?>&emsp;&emsp;<font size="+3">MM Score: <?php echo $avgScore; ?></font></h2>
+			<h2>Artist: <?php echo $albumArtist; ?>&emsp;&emsp;<font size="+3">MM Score: <?php echo $avgScore; ?>/10</font></h2>
 			<p><?php 
 				$dFile = fopen($albumDescription, "r") or die("Unable to load description!");
 				echo fread($dFile, filesize($albumDescription));
@@ -80,8 +109,13 @@
 				<div class="postText">	
 					<h2 id="postUser"><a href="home.php"><font size="+2">'.$rAuthor.'</font></a>&emsp;&emsp;Score: '.$rScore.'/10&emsp;&emsp;'.$rPostDate.'</h2>
 					<p>'.fread($rFile, filesize($rDesc)).'</p>
-				</div>
-			</div>';
+				</div>';
+			if (trim($_SESSION['username']) == trim($rAuthor) || $_SESSION['isAdmin'] == 1) {	
+				echo '<form method="post" action="'.$_SERVER['PHP_SELF'].'">
+						<button name="revROD" value="'.$rID.'" class="hubButtons hItem" type="submit" style="float: right; margin-right: 50px;">Delete this review?</button>
+					</form>';
+			}
+			echo '</div>';
 			fclose($rFile);
 		}
 		$mysql_db->close();
