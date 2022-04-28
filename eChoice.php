@@ -73,6 +73,7 @@
 				createAlbumQuery($mysql_db, $num);
 				$num = $num + 1;
 			}
+			$mysql_db->close();
 		?>
 	</form>
 </body>

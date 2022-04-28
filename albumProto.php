@@ -14,9 +14,8 @@
 	
 	$albumName = $albumArtist = $albumDescription = $albumArt = '';
 	$sql = 'SELECT albumName, albumArtist, albumDescription, albumArt, avgScore FROM albums WHERE albumID = ?';
-	
+	$aID = $_SESSION['albNum'];
 	if ($stmt = $mysql_db->prepare($sql)) {
-			$aID = $_SESSION['albNum'];
 			$stmt->bind_param('i', $aID);
 			if ($stmt->execute()) {
 				$stmt->store_result();
@@ -26,7 +25,26 @@
 				}
 			}
 	}
-	$mysql_db->close();
+	
+	$scoreQ = "SELECT AVG(reviewScore) FROM `reviews` WHERE albumID = ".$aID;
+	$scSt = $mysql_db->prepare($scoreQ);
+	$scSt->execute();
+	$scSt->bind_result($avgScore);
+	$scSt->store_result();
+	$scSt->fetch();
+	$avgScore = number_format($avgScore, 1);
+	
+	$rQuery = "SELECT `reviewID`, `reviewDescript`, `reviewScore`, `authorUsername`, `postingDate` FROM `reviews` WHERE albumID = ".$aID;
+	$rStmt = $mysql_db->prepare($rQuery);
+	$rStmt->execute();
+	$rStmt->bind_result($rID, $rDesc, $rScore, $rAuthor, $rPostDate);
+	
+	if (isset($_REQUEST['cRB'])) {
+		$_SESSION['rD'] = "Enter review here...";
+		$mysql_db->close();
+		header('location: createReview.php');
+	}
+	//$mysql_db->close();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -49,56 +67,24 @@
 				?></p>
 		</div>
 	</div>
-	<div class="homeLetter hItem" style="margin-top: 50px; margin-right: 70px;">
+	<div class="homeLetter hItem"> <!--style="margin-top: 50px; margin-right: 70px;"-->
 		<h1>User Reviews</h1>
 	</div>
-	<a class="hubButtons hItem" href="createReview.php">Create Review</a>
-	<div class="reviewPost hItem">
-		<div class="postText">	
-			<h2 id="postUser"><a href="home.php"><font size="+2">username</font></a>&emsp;&emsp;Score: can i get uhhh/10</h2>
-			<p>eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,
-			eatin' a burger wit no honey mustard,</p>
-		</div>
-	</div>
+	<form method="post" action="<?php echo $_SERVER['PHP_SELF'];?>">
+		<button name="cRB" class="hubButtons hItem" type="submit"><font size="+2">Create Review</font></button>
+	</form>
+	<?php	
+		while ($rStmt->fetch()) {
+			$rFile = fopen($rDesc, "r") or die("Unable to load review text!");
+			echo '<div class="reviewPost hItem">
+				<div class="postText">	
+					<h2 id="postUser"><a href="home.php"><font size="+2">'.$rAuthor.'</font></a>&emsp;&emsp;Score: '.$rScore.'/10&emsp;&emsp;'.$rPostDate.'</h2>
+					<p>'.fread($rFile, filesize($rDesc)).'</p>
+				</div>
+			</div>';
+			fclose($rFile);
+		}
+		$mysql_db->close();
+	?>
 </body>
 </html>

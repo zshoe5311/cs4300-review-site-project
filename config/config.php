@@ -5,6 +5,8 @@
 	$password = "";
 	$dbname = "reviewsitedata";
 
+	date_default_timezone_set('America/New_York');
+
 	// Create connection
 	$mysql_db = new mysqli($servername, $username, $password);
 	// Check connection
@@ -126,30 +128,29 @@
 	  echo "Error creating reviews table: " . $con->error;
 	}
 	
-	/*$bsql = "SELECT COUNT(*) AS cnt FROM albums";
+	$bsql = "SELECT COUNT(*) AS cnt FROM reviews";
 	$stmt = $con->query($bsql);
 	$result = $stmt->fetch_assoc();
-	$myfile = fopen("aData.txt", "r") or die("Unable to open aData!");
-	if ($result['cnt'] < 1 && !empty(file_get_contents("aData.txt"))) {
-		$aDesc = $aName = $aArtist = $alArt = '';
-		$aScore = $aID = 0;
+	$myfile = fopen("rData.txt", "r") or die("Unable to open rData!");
+	if ($result['cnt'] < 1 && !empty(file_get_contents("rData.txt"))) {
+		$rDesc = $postDate = $author = '';
+		$rID = $rScore = $aID = 0;
 		while(!feof($myfile)) {
+			$rID = trim(fgets($myfile));
 			$aID = trim(fgets($myfile));
-			$aArtist = trim(fgets($myfile));
-			$aDesc = trim(fgets($myfile));
-			$alArt = trim(fgets($myfile));
-			$aScore = trim(fgets($myfile));
-			$aName = trim(fgets($myfile));
-			$isql = "INSERT INTO `albums`(`albumName`, `albumArtist`, `albumDescription`, `albumArt`, `avgScore`, `albumID`) 
-			VALUES (?,?,?,?,?,?)";
+			$rDesc = trim(fgets($myfile));
+			$rScore = trim(fgets($myfile));
+			$author = trim(fgets($myfile));
+			$postDate = trim(fgets($myfile));
+			$isql = "INSERT INTO `reviews`(`reviewID`, `albumID`, `reviewDescript`, `reviewScore`, `authorUsername`, `postingDate`) VALUES (?,?,?,?,?,?)";
 			if ($stmt = $con->prepare($isql)) {
-				$stmt->bind_param('ssssii', $aName, $aArtist, $aDesc, $alArt, $aScore, $aID);
+				$stmt->bind_param('iisiss', $rID, $aID, $rDesc, $rScore, $author, $postDate);
 				if ($stmt->execute()) {
 					echo "!";
 				}		
 			}
 		}
 	}
-	fclose($myfile);*/
+	fclose($myfile);
 	
 	?>

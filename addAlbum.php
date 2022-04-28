@@ -112,7 +112,7 @@
 		</form>
 	</div>
 	<div class="genSection hItem">
-		<p> <?php echo $input_err; ?>
+		<p><?php echo $input_err; ?></p>
 	</div>
 </body>
 </html>
