@@ -26,13 +26,13 @@
 			}
 	}
 	
-	$scoreQ = "SELECT AVG(reviewScore) FROM `reviews` WHERE albumID = ".$aID;
+	/*$scoreQ = "SELECT AVG(reviewScore) FROM `reviews` WHERE albumID = ".$aID;
 	$scSt = $mysql_db->prepare($scoreQ);
 	$scSt->execute();
 	$scSt->bind_result($avgScore);
 	$scSt->store_result();
 	$scSt->fetch();
-	$avgScore = number_format($avgScore, 1);
+	$avgScore = number_format($avgScore, 1);*/
 	
 	$rQuery = "SELECT `reviewID`, `reviewDescript`, `reviewScore`, `authorUsername`, `postingDate` FROM `reviews` WHERE albumID = ".$aID;
 	$rStmt = $mysql_db->prepare($rQuery);
@@ -41,7 +41,7 @@
 	$rStmt->bind_result($rID, $rDesc, $rScore, $rAuthor, $rPostDate);
 	
 	if (isset($_REQUEST['cRB'])) {
-		$_SESSION['rD'] = "Enter review here...";
+		$_SESSION['rD'] = "";
 		$mysql_db->close();
 		header('location: createReview.php');
 	}
@@ -69,6 +69,18 @@
 			file_put_contents("rData.txt", $contents);
 			fclose($myfile);
 			unlink('reviews/'.$dRID.'.txt');
+			
+			$scoreQ = "SELECT AVG(reviewScore) FROM `reviews` WHERE albumID = ".$aID;
+			$scSt = $mysql_db->prepare($scoreQ);
+			$scSt->execute();
+			$scSt->bind_result($avgScore);
+			$scSt->store_result();
+			$scSt->fetch();
+			$avgScore = number_format($avgScore, 1);
+			
+			$aQ = "UPDATE `albums` SET `avgScore`= ".$avgScore." WHERE `albumID` = ".$aID;
+			$aStmt = $mysql_db->prepare($aQ);
+			$aStmt->execute();
 		}
 		$mysql_db->close();
 		header('location: albumProto.php');
@@ -105,11 +117,18 @@
 	<?php	
 		while ($rStmt->fetch()) {
 			$rFile = fopen($rDesc, "r") or die("Unable to load review text!");
-			echo '<div class="reviewPost hItem">
-				<div class="postText">	
-					<h2 id="postUser"><a href="home.php"><font size="+2">'.$rAuthor.'</font></a>&emsp;&emsp;Score: '.$rScore.'/10&emsp;&emsp;'.$rPostDate.'</h2>
-					<p>'.fread($rFile, filesize($rDesc)).'</p>
+			if (filesize($rDesc) > 0) {
+				echo '<div class="reviewPost hItem">
+					<div class="postText">	
+						<h2 id="postUser"><a href="home.php"><font size="+2">'.$rAuthor.'</font></a>&emsp;&emsp;Score: '.$rScore.'/10&emsp;&emsp;'.$rPostDate.'</h2>
+						<p>'.fread($rFile, filesize($rDesc)).'</p>
 				</div>';
+			} else {
+				echo '<div class="reviewPost hItem">
+					<div class="postText">	
+						<h2 id="postUser"><a href="home.php"><font size="+2">'.$rAuthor.'</font></a>&emsp;&emsp;Score: '.$rScore.'/10&emsp;&emsp;'.$rPostDate.'</h2>
+				</div>';
+			}
 			if (trim($_SESSION['username']) == trim($rAuthor) || $_SESSION['isAdmin'] == 1) {	
 				echo '<form method="post" action="'.$_SERVER['PHP_SELF'].'">
 						<button name="revROD" value="'.$rID.'" class="hubButtons hItem" type="submit" style="float: right; margin-right: 50px;">Delete this review?</button>

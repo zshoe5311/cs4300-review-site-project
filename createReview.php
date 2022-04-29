@@ -21,7 +21,7 @@
 		}
 		$rDescript = $_SESSION["rD"];
 		$input_err = "";
-		if($_SERVER['REQUEST_METHOD'] === 'POST') {
+		if($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_POST['hSearch'])) {
 			$rScore = trim($_POST['revScore']);
 			if(empty(trim($_POST['revScore']))) {
 				$input_err = "Please enter your review score out of 10. No zeroes, negative numbers, or decimals, please.";
@@ -61,6 +61,19 @@
 						fwrite($dFile, $author."\n");
 						fwrite($dFile, $createTime."\n");
 						fclose($dFile);
+						
+						$scoreQ = "SELECT AVG(reviewScore) FROM `reviews` WHERE albumID = ".$aID;
+						$scSt = $mysql_db->prepare($scoreQ);
+						$scSt->execute();
+						$scSt->bind_result($avgScore);
+						$scSt->store_result();
+						$scSt->fetch();
+						$avgScore = number_format($avgScore, 1);
+						
+						$aQ = "UPDATE `albums` SET `avgScore`= ".$avgScore." WHERE `albumID` = ".$aID;
+						$aStmt = $mysql_db->prepare($aQ);
+						$aStmt->execute();
+						
 						header('location: albumProto.php');
 					}
 				}
@@ -86,7 +99,7 @@
 	</div>
 	<form method="post" action="<?php echo $_SERVER['PHP_SELF'];?>">
 		<div class="createRText hItem">
-			<textarea rows="10" cols="100" name="revDescript"><?php echo $rDescript ?></textarea>
+			<textarea rows="10" cols="100" name="revDescript" placeholder="Enter review here..."><?php echo $rDescript ?></textarea>
 		</div>
 		<div class="hItem scoreInput">
 			<h2>Enter your score out of 10 below! (No negatives)</h2>

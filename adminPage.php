@@ -15,7 +15,7 @@
 <body>
 	<?php include 'hdr.php'; ?>
 	<div class="genSection hItem">	
-		<h1>Choose your action:</h1>
+		<h1>Welcome to your admin page <?php echo $_SESSION['username'] ?>! Please choose your action:</h1>
 		<a class="hubButtons" href="addAlbum.php"> Add Album</a>
 		<a class="hubButtons" href="deleteAlbum.php"> Delete Album</a>
 	</div>
