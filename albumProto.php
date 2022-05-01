@@ -120,13 +120,13 @@
 			if (filesize($rDesc) > 0) {
 				echo '<div class="reviewPost hItem">
 					<div class="postText">	
-						<h2 id="postUser"><a href="home.php"><font size="+2">'.$rAuthor.'</font></a>&emsp;&emsp;Score: '.$rScore.'/10&emsp;&emsp;'.$rPostDate.'</h2>
+						<h2 id="postUser"><a href="accountPage.php?uNamePage='.$rAuthor.'"><font size="+2">'.$rAuthor.'</font></a>&emsp;&emsp;Score: '.$rScore.'/10&emsp;&emsp;'.$rPostDate.'</h2>
 						<p>'.fread($rFile, filesize($rDesc)).'</p>
 				</div>';
 			} else {
 				echo '<div class="reviewPost hItem">
 					<div class="postText">	
-						<h2 id="postUser"><a href="home.php"><font size="+2">'.$rAuthor.'</font></a>&emsp;&emsp;Score: '.$rScore.'/10&emsp;&emsp;'.$rPostDate.'</h2>
+						<h2 id="postUser"><a href="accountPage.php?uNamePage='.$rAuthor.'"><font size="+2">'.$rAuthor.'</font></a>&emsp;&emsp;Score: '.$rScore.'/10&emsp;&emsp;'.$rPostDate.'</h2>
 				</div>';
 			}
 			if (trim($_SESSION['username']) == trim($rAuthor) || $_SESSION['isAdmin'] == 1) {	

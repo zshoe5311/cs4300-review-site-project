@@ -37,7 +37,7 @@
 	} else if (isset($_REQUEST['aUB'])) {
 		header('location: home.php');
 	} else if (isset($_REQUEST['aPB'])) {
-		header('location: adminPage.php');
+		header('location: accountPage.php?uNamePage='.$_SESSION['username']);
 	} 
 	
 	/*else if (isset($_POST['hSearch'])) {
@@ -64,13 +64,15 @@
 		
 		<div class="hItem">
 			<form name="hdrForm" method="post" action="'.$_SERVER['PHP_SELF'].'">
-			<button name="homeB" class="hubButtons hB" href="home.php"> Home</button>
-			<button name="eCB" class="hubButtons hB" href="eChoice.php"> Editor\'s Choice</button>
-			<button name="tB" class="hubButtons hB" href="eChoice.php"> Top 10 of the Site</button>
-			<button name="lOB" class="hubButtons hB" href="logout.php"> Log Out</button>
-			<button name="aUB" class="hubButtons hB" href="#"> About Us</button>'; 
+			<button name="homeB" class="hubButtons hB"> Home</button>
+			<button name="eCB" class="hubButtons hB"> Editor\'s Choice</button>
+			<button name="tB" class="hubButtons hB"> Top 10 of the Site</button>
+			<button name="lOB" class="hubButtons hB"> Log Out</button>
+			<button name="aUB" class="hubButtons hB"> About Us</button>'; 
 		if ($_SESSION['isAdmin'] == 1) {
-			echo '<button name="aPB" class="hubButtons hB" href="adminPage.php">Admin Page</button>';	
+			echo '<button name="aPB" class="hubButtons hB">Admin Page</button>';	
+		} else {
+			echo '<button name="aPB" class="hubButtons hB">Account Page</button>';
 		}
 	echo '</form></div></div>';
 ?>

@@ -64,7 +64,7 @@
                 // Store data in sessions
                 $_SESSION['loggedin'] = true;
                 $_SESSION['id'] = $id;
-                $_SESSION['username'] = $username;
+                $_SESSION['username'] = trim($username);
 				$_SESSION['isAdmin'] = $isAdmin;
                 // Redirect to user to page
                 header('location: home.php');
