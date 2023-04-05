@@ -2,41 +2,119 @@
 Gorillaz
 albDescriptions/DemonDays.txt
 demonDays.png
-0
+8.0
 Demon Days
 2
 Kanye West
 albDescriptions/TheCollegeDropout.txt
 tcd.jpg
-0
+7.0
 The College Dropout
 3
 Daft Punk
 albDescriptions/Discovery.txt
 Discovery.jpg
-0
+10.0
 Discovery
 4
 Drake
 albDescriptions/CertifiedLoverBoy.txt
 clb.jpg
-0
+5.0
 Certified Lover Boy
 5
 Kendrick Lamar
 albDescriptions/goodkid,m.A.A.dcity.txt
 gkmc.jpg
-0
+8.0
 good kid, m.A.A.d city
 6
 The Beatles
 albDescriptions/RubberSoul.txt
 rSoul.jpg
-0
+7.0
 Rubber Soul
 7
 Nirvana
 albDescriptions/InUtero.txt
 inUtero.jpg
-0
+7.5
 In Utero
+8
+The Beatles
+albDescriptions/AbbeyRoad.txt
+aRoad.jpg
+8.0
+Abbey Road
+9
+Kanye West
+albDescriptions/Donda.txt
+donda.jpg
+6.0
+Donda
+10
+Daft Punk
+albDescriptions/RandomAccessMemories.txt
+ram.jpg
+9.0
+Random Access Memories
+11
+Tyler, the Creator
+albDescriptions/Igor.txt
+igor.jpg
+6.7
+Igor
+12
+Kendrick Lamar
+albDescriptions/DAMN..txt
+damn.png
+7.5
+DAMN.
+13
+Mac DeMarco
+albDescriptions/SaladDays.txt
+saladDays.png
+5.0
+Salad Days
+14
+Ryo Fukui
+albDescriptions/Scenery.txt
+scenery.jpg
+10.0
+Scenery
+15
+Denzel Curry
+albDescriptions/Unlocked.txt
+unlocked.png
+8.5
+Unlocked
+16
+System of a Down
+albDescriptions/Mezmerize.txt
+mezmerize.jpg
+9.0
+Mezmerize
+17
+Tame Impala
+albDescriptions/Currents.txt
+currents.png
+7.0
+Currents
+18
+Danny Brown
+albDescriptions/uknowhatimsayin.txt
+ukwis.png
+6.5
+uknowhatimsayin?
+19
+The Strokes
+albDescriptions/IsThisIt.txt
+iti.png
+9.0
+Is This It
+20
+Jack Stauber
+albDescriptions/HiLo.txt
+hl.jpg
+8.0
+HiLo

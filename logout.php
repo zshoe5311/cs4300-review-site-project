@@ -2,12 +2,13 @@
 	// Start sessions
 	session_start();
 
-	$_SESSION  = array();
+	//$_SESSION  = array();
 
 	// Destroy all session related to user
-	session_destroy();
+	$_SESSION['loggedin'] = false;
+	//session_destroy();
 
-	// Redirect to login page
+	// Redirect to home page
 	header('location: index.php');
 	exit;
 ?>

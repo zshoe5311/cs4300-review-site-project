@@ -108,7 +108,21 @@
 				// Attempt to execute
 				if ($stmt->execute()) {
 					// Redirect to login page
-					header('location: ./index.php');
+					$stmt->close();
+					$isA = $isB = 0;
+					date_default_timezone_set('America/New_York');
+					$crAT = date('Y-m-d H:i:s');
+					
+					$myfile = fopen("uData.txt", "a") or die("Unable to open uData!");
+					fwrite($myfile, $uID."\n");
+					fwrite($myfile, $param_username."\n");
+					fwrite($myfile, $param_password."\n");
+					fwrite($myfile, $crAT."\n");
+					fwrite($myfile, $isA."\n");
+					fwrite($myfile, $isB."\n");
+					fclose($myfile);
+					
+					header('location: ./login.php');//real
 					// echo "Will  redirect to login page";
 				} else {
 					echo "Something went wrong. Try signing in again.";
@@ -167,7 +181,7 @@
         			<input type="submit" class="btn btn-block btn-outline-success" value="Submit">
         			<input type="reset" class="btn btn-block btn-outline-primary" value="Reset">
         		</div>
-        		<p>Already have an account? <a href="index.php">Login here</a>.</p>
+        		<p>Already have an account? <a href="login.php">Login here</a>.</p>
         	</form>
 		</section>
 	</main>

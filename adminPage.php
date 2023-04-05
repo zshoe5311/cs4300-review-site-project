@@ -2,7 +2,7 @@
 	session_start();
 	
 	if ($_SESSION['isAdmin'] == 0) {
-		header('location: home.php');
+		header('location: index.php');//real
 	}
 ?>
 <!DOCTYPE html>

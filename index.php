@@ -1,138 +1,33 @@
 <?php
-  // Initialize sessions
-  session_start();
-
-  // Check if the user is already logged in, if yes then redirect him to welcome page
-  if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
-    header("location: home.php");
-    exit;
-  }
-
-  // Include config file
-  require_once "config/config.php";
-
-  // Define variables and initialize with empty values
-  $username = $password = '';
-  $username_err = $password_err = '';
-
-  // Process submitted form data
-  if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-    // Check if username is empty
-    if(empty(trim($_POST['username']))){
-      $username_err = 'Please enter username.';
-    } else{
-      $username = trim($_POST['username']);
-    }
-
-    // Check if password is empty
-    if(empty(trim($_POST['password']))){
-      $password_err = 'Please enter your password.';
-    } else{
-      $password = trim($_POST['password']);
-    }
-
-    // Validate credentials
-    if (empty($username_err) && empty($password_err)) {
-      // Prepare a select statement
-      $sql = 'SELECT id, username, password, isAdmin, isBanned FROM users WHERE username = ?';
-
-      if ($stmt = $con->prepare($sql)) {
-
-        // Set parmater
-        $param_username = $username;
-
-        // Bind param to statement
-        $stmt->bind_param('s', $param_username);
-
-        // Attempt to execute
-        if ($stmt->execute()) {
-
-          // Store result
-          $stmt->store_result();
-
-          // Check if username exists. Verify user exists then verify
-          if ($stmt->num_rows == 1) {
-            // Bind result into variables
-            $stmt->bind_result($id, $username, $hashed_password, $isAdmin, $isBanned);
-
-            if ($stmt->fetch()) {
-              if (password_verify($password, $hashed_password) && $isBanned == 0) {
-                // Start a new session
-                session_start();
-
-                // Store data in sessions
-                $_SESSION['loggedin'] = true;
-                $_SESSION['id'] = $id;
-                $_SESSION['username'] = $username;
-				$_SESSION['isAdmin'] = $isAdmin;
-                // Redirect to user to page
-                header('location: home.php');
-              } else {
-				if ($isBanned == 1) {
-					$password_err = 'This account is banned. You are no longer able to post reviews.';
-				}
-				else {
-					// Display an error for passord mismatch
-					$password_err = 'Invalid password';
-				}
-              }
-            }
-          } else {
-            $username_err = "Username does not exists.";
-          }
-        } else {
-          echo "Oops! Something went wrong please try again";
-        }
-        // Close statement
-        $stmt->close();
-      }
-
-      // Close connection
-	  $con->close();//sus
-      $mysql_db->close();
-    }
-  }
+	session_start();
+	
+	if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] === false) {//Sets 'loggedin' session variable to false if it has not been set yet
+		$_SESSION['loggedin'] = false;
+	}
+	
+	require_once "config/config.php"; //runs config to create database
+	$con->close();
+	$mysql_db->close(); //the above 3 lines are to make sure the database is here and complete
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Sign in</title>
-  <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.4.1/cosmo/bootstrap.min.css" rel="stylesheet" integrity="sha384-qdQEsAI45WFCO5QwXBelBe1rR9Nwiss4rGEqiszC+9olH1ScrLrMQr1KmDR964uZ" crossorigin="anonymous">
-  <style>
-    .wrapper{ 
-      width: 500px; 
-      padding: 20px; 
-    }
-    .wrapper h2 {text-align: center}
-    .wrapper form .form-group span {color: red;}
-  </style>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="newStyle.css">
+	<title>Home - MM</title>
 </head>
 <body>
-  <main>
-    <section class="container wrapper">
-      <h2 class="display-4 pt-3">Login</h2>
-          <p class="text-center">Please fill in your credentials.</p>
-          <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST">
-            <div class="form-group <?php (!empty($username_err))?'has_error':'';?>">
-              <label for="username">Username</label>
-              <input type="text" name="username" id="username" class="form-control" value="<?php echo $username ?>">
-              <span class="help-block"><?php echo $username_err;?></span>
-            </div>
-
-            <div class="form-group <?php (!empty($password_err))?'has_error':'';?>">
-              <label for="password">Password</label>
-              <input type="password" name="password" id="password" class="form-control" value="<?php echo $password ?>">
-              <span class="help-block"><?php echo $password_err;?></span>
-            </div>
-
-            <div class="form-group">
-              <input type="submit" class="btn btn-block btn-outline-primary" value="login">
-            </div>
-            <p>Don't have an account? <a href="register.php">Create one</a>.</p>
-          </form>
-    </section>
-  </main>
+	<?php include 'hdr.php'; ?> <!-- includes hub bar-->
+	<div class="homeLetter hItem slide-in-fwd-center" style="margin: 0px 550px 40px;">	<!--the below code is used to create the text blobs on the home page-->
+		<h1>Welcome to Music Madness!</h1>
+		<p style="font-size: 20px;">We are a small music review page looking to not only share our opinions on music, but to create a community of discussion and enjoyment for the music we like across all genres. </p>
+	</div>
+	<div class="genSection hItem slide-in-fwd-center" style="width: 70%">	
+		<div id="homeText" style="text-align: left; padding: 10px;">
+			<h2>We aim to grow a community that is as passionate for music as we are:</h2>
+			<p style="font-size: 20px;">Our website started out as just a way for us to share our own opinions with each other on the music that we like. But the bigger it has grown, and the more
+			albums that have been added, we felt it was time to share the love, and continue growing our website to not only discover new music from others, but share our own favorite music with them.  </p>
+		</div>
+	</div>
 </body>
 </html>
